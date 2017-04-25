@@ -1,0 +1,8 @@
+   Algorithm changedp
+1 3 7 12 
+0 1 2 1 
+4
+   Algorithm changedp
+1 3 7 12 
+0 1 2 1 
+4
