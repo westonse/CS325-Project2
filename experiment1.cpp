@@ -1,18 +1,46 @@
 // C++ program to find minimum of coins
 // to make a given change V
-#include <iostream>
-#include <fstream>
-#include <stdio.h>
-#include <string>
-#include <sstream>
+#include<iostream>
+#include<fstream>
+#include<stdio.h>
+#include<string>
+#include<sstream>
 #include<time.h>
 #include<math.h>
+#include<limits.h>
 
 using namespace std;
 const int MAX_ARRAY_SIZE = 100;
 //used for seths xcode environment dont use for putty
 //global change array contains list of coins used to make change
 int change[MAX_ARRAY_SIZE] = {0};
+
+
+/*******METHOD 2: Greedy Algorithm********/
+int changegreedy(int coins[], int m, int V){
+	int used[m+1];			//tracks actual coins used.
+	int count = 0;			//tracks coin total count.
+	for (int i=0;i<m+1;i++){
+		used[i] = 0;		//init usage array
+	}
+	while (V>0){
+	    for(int i=m-1; i>=0; i--){	//start at end, work back.
+		if(coins[i] <= V){	//if largest, decrement. Else, skip.
+		    V -= coins[i];
+		    used[i] +=1;
+		    count++;
+		    break;		//break when valid value has been found.
+		}
+	    }
+	}
+// Uncomment this section for specific coin values.
+//	for (int i=0; i<m; i++){
+//		cout << used[i] << " ";
+//	}
+	cout << "greedy: ";
+	return count;
+}
+
 
 /*******METHOD 3: Dynamic Programming*****/
 // m is size of coins array (number of different coins)
@@ -61,6 +89,7 @@ int changedp(int coins[], int m, int V)
         }
         // cout << "\n";
     }
+	cout << "dp: ";
     return table[V];
     //return ret;
 }
@@ -89,13 +118,11 @@ int main(int argc, char** argv)
         /*
          *
          */
-        //
         
+    
         /******** ALGORITHM 2 Greedy Method *******/
-        /*
-         *
-         */
-        //
+        numCoins = changegreedy(v1, sizev1, A);
+	cout << numCoins << "\n"; 
         
         
         /*******METHOD 3: Dynamic Programming*****/
@@ -117,11 +144,9 @@ int main(int argc, char** argv)
         //
         
         /******** ALGORITHM 2 Greedy Method *******/
-        /*
-         *
-         */
-        //
-        
+        numCoins = changegreedy(v2, sizev2, A);
+	cout << numCoins << "\n"; 
+       
         
         /*******METHOD 3: Dynamic Programming*****/
         numCoins = changedp(v2, sizev2, A);
@@ -141,9 +166,9 @@ int main(int argc, char** argv)
         //cout<<numCoins<<"\n";
         
         /******** ALGORITHM 2 Greedy Method *******/
-        //numCoins = changegreedy(v3, denominationsSize, A);
-        //cout<<numCoins<<"\n";
-        
+        numCoins = changegreedy(v3, sizev3, A);
+        cout<< numCoins<<"\n";
+       
         
         
         /*******METHOD 3: Dynamic Programming*****/
@@ -165,11 +190,9 @@ int main(int argc, char** argv)
         //
         
         /******** ALGORITHM 2 Greedy Method *******/
-        /*
-         *
-         */
-        //
-        
+        numCoins = changegreedy(v1, sizev1, A);
+        cout<< numCoins<<"\n";
+       
         
         /*******METHOD 3: Dynamic Programming*****/
         numCoins = changedp(v1, sizev1, A);
@@ -190,11 +213,9 @@ int main(int argc, char** argv)
         //
         
         /******** ALGORITHM 2 Greedy Method *******/
-        /*
-         *
-         */
-        //
-        
+        numCoins = changegreedy(v2, sizev2, A);
+        cout<< numCoins<<"\n";
+         
         
         /*******METHOD 3: Dynamic Programming*****/
         numCoins = changedp(v2, sizev2, A);
@@ -214,9 +235,9 @@ int main(int argc, char** argv)
         //cout<<numCoins<<"\n";
         
         /******** ALGORITHM 2 Greedy Method *******/
-        //numCoins = changegreedy(v3, denominationsSize, A);
-        //cout<<numCoins<<"\n";
-        
+        numCoins = changegreedy(v3, sizev3, A);
+        cout<< numCoins<<"\n";
+      
         
         
         /*******METHOD 3: Dynamic Programming*****/
