@@ -11,7 +11,7 @@
 using namespace std;
 const int MAX_ARRAY_SIZE = 100;
 //used for seths xcode environment dont use for putty
-const string path = "/Users/westonse/Library/Autosave Information/Project2/Project2/";
+const string path = "./";
 //global change array contains list of coins used to make change
 int change[MAX_ARRAY_SIZE] = {0};
 
@@ -35,9 +35,9 @@ void printResults(int coins[], int denominationsSize, int numCoins, int algorith
     int curCoin = 0;
     //print appropriate algorithm
     switch(algorithm) {
-        case 1 : myfile2 << "   Algorithm changeslow\n";
-        case 2 : myfile2 << "   Algorithm changegreedy\n";
-        case 3 : myfile2 << "   Algorithm changedp\n";
+        case 1 : myfile2 << "   Algorithm changeslow\n";break;
+        case 2 : myfile2 << "   Algorithm changegreedy\n";break;
+        case 3 : myfile2 << "   Algorithm changedp\n";break;
     }
     //init results to 0
     for(int k = 0; k<denominationsSize; k++)
@@ -75,6 +75,37 @@ void printResults(int coins[], int denominationsSize, int numCoins, int algorith
 
     }
 }
+
+/*******METHOD 2: Greedy Algorithm********/
+/*
+ *    Algorithm assumes the array is already sorted.
+ */
+// m is size of coins array (number of different coins)
+int changegreedy(int coins[], int m, int V){
+    int used[m+1];
+    int count = 0;
+    for (int i=0;i<m+1;i++){
+	used[i] = 0;
+    }
+// This loop gets the number of coins and their values.
+    while(V > 0){
+	for (int i=m-1; i>=0; i--) {
+	    if(coins[i] <= V){
+//		cout << "subtracting " << coins[i] << " from target value.\n";
+		V -= coins[i];
+		used[i] += 1;
+		count++;	
+		break;
+	    }
+	}
+    }
+	for (int i=0; i<m; i++){
+	    cout << used[i] << " ";
+	}
+	cout << "\n";
+    return count;
+}
+
 
 /*******METHOD 3: Dynamic Programming*****/
 // m is size of coins array (number of different coins)
@@ -207,10 +238,11 @@ int main(int argc, char** argv)
                     //
                     
                     /******** ALGORITHM 2 Greedy Method *******/
-                    /*
-                     *
-                     */
-                    //
+                    numCoins = changegreedy(coins, denominationsSize, V);
+		    printResults(coins,denominationsSize,numCoins,2,count);
+                    
+                    
+                    
                     
                     
                     /*******METHOD 3: Dynamic Programming*****/
