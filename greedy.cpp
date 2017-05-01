@@ -21,7 +21,7 @@ void printGreedy(int coins[], int denominationsSize, int numCoins, int results[]
 	ofstream myfile2;
 
 	myfile2.open (filename2.c_str(), ofstream::out | ofstream::app);
-		myfile2 << "change Greedy\n";
+		myfile2 << "Algorithm changegreedy\n";
 		for (int i=0; i<denominationsSize; i++){
 			myfile2 << coins[i] << " ";
 		}
