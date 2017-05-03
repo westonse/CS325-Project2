@@ -11,37 +11,39 @@
 using namespace std;
 const int MAX_ARRAY_SIZE = 100;
 //used for seths xcode environment dont use for putty
-const string path = "/Users/westonse/Library/Autosave Information/Project2/Project2/";
+//const string path = "/Users/westonse/Library/Autosave Information/Project2A/Project2A/";
 //global change array contains list of coins used to make change
 int change[MAX_ARRAY_SIZE] = {0};
 
 void printResults(int coins[], int denominationsSize, int numCoins, int algorithm, int count, string filename)
 {
     //std::string filename2 = path + "changeResults.txt";
+    //string filename2 = "./changeResults.txt";
     size_t found = filename.find(".");
     filename.erase(found,filename.length()-found);
     filename = filename + "change.txt";
-    //string filename2 = "./changeResults.txt";
     ofstream myfile2;
     //open new file if first time making change
     if(count>1)
     {
         myfile2.open (filename.c_str(), ios::app);
+        myfile2 << "\n";
     }
     //else append
     else
     {
         myfile2.open (filename.c_str());
+        switch(algorithm) {
+            case 1 : myfile2 << "   Algorithm changeslow\n";break;
+            case 2 : myfile2 << "   Algorithm changegreedy\n";break;
+            case 3 : myfile2 << "   Algorithm changedp\n";break;
+        }
     }
     //print results to file
     int results[denominationsSize];
     int curCoin = 0;
     //print appropriate algorithm
-    switch(algorithm) {
-        case 1 : myfile2 << "   Algorithm changeslow\n";
-        case 2 : myfile2 << "   Algorithm changegreedy\n";
-        case 3 : myfile2 << "   Algorithm changedp\n";
-    }
+
     //init results to 0
     for(int k = 0; k<denominationsSize; k++)
     {
@@ -50,9 +52,7 @@ void printResults(int coins[], int denominationsSize, int numCoins, int algorith
     //create result array based on the assignment requirements
     for(int i = 0; i<numCoins; i++)
     {
-        //print each denomination
-        curCoin = coins[i];
-        myfile2<<curCoin<<" ";
+
         for(int j = 0; j<denominationsSize; j++)
         {
             if(change[i] == coins[j])
@@ -60,11 +60,19 @@ void printResults(int coins[], int denominationsSize, int numCoins, int algorith
                 results[j]++;
             }
         }
-        if(i == denominationsSize-1)
+
+    }
+    for(int h = 0; h<denominationsSize; h++)
+    {
+        //print each denomination
+        curCoin = coins[h];
+        myfile2<<curCoin<<" ";
+        if(h == denominationsSize-1)
         {
             myfile2<<"\n";
         }
     }
+    
     for(int l = 0; l<denominationsSize; l++)
     {
         myfile2<<results[l]<<" ";
@@ -75,9 +83,40 @@ void printResults(int coins[], int denominationsSize, int numCoins, int algorith
             std::fill_n(results, denominationsSize, 0);
         }
         
-
+        
     }
 }
+
+/*******METHOD 2: Greedy Algorithm********/
+/*
+ *    Algorithm assumes the array is already sorted.
+ */
+// m is size of coins array (number of different coins)
+int changegreedy(int coins[], int m, int V){
+    int used[m+1];
+    int count = 0;
+    for (int i=0;i<m+1;i++){
+        used[i] = 0;
+    }
+    // This loop gets the number of coins and their values.
+    while(V > 0){
+        for (int i=m-1; i>=0; i--) {
+            if(coins[i] <= V){
+                //		cout << "subtracting " << coins[i] << " from target value.\n";
+                V -= coins[i];
+                used[i] += 1;
+                count++;
+                break;
+            }
+        }
+    }
+    for (int i=0; i<m; i++){
+        cout << used[i] << " ";
+    }
+    cout << "\n";
+    return count;
+}
+
 
 /*******METHOD 3: Dynamic Programming*****/
 // m is size of coins array (number of different coins)
@@ -124,7 +163,7 @@ int changedp(int coins[], int m, int V)
             count++;
             start = start - coins[j];
         }
-       // cout << "\n";
+        // cout << "\n";
     }
     return table[V];
     //return ret;
@@ -210,10 +249,11 @@ int main(int argc, char** argv)
                     //
                     
                     /******** ALGORITHM 2 Greedy Method *******/
-                    /*
-                     *
-                     */
-                    //
+                    //numCoins = changegreedy(coins, denominationsSize, V);
+                    //printResults(coins,denominationsSize,numCoins,2,count);
+                    
+                    
+                    
                     
                     
                     /*******METHOD 3: Dynamic Programming*****/
@@ -241,11 +281,11 @@ int main(int argc, char** argv)
     //close the file
     myfile.close();
     
-
     
-
+    
+    
     return 0;
-
-
+    
+    
     
 }
